@@ -1,11 +1,11 @@
-## Tascam CD-400u Media Player
+## Tascam CD-400U Media Player
 
-This module will control the Tascam DA-6400.
+This module will control the Tascam CD-400U when fitted with an IF-E100 Ethernet module.
 
 - [Tascam CD-400U Page](https://tascam.com/us/product/cd-400u/)
 
 ## Configuration
-Enter the IP address, port and password of the recorder.
+Enter the IP address, and port of the media player.
 
 ## Actions
 - **Stop** 
@@ -14,16 +14,18 @@ Enter the IP address, port and password of the recorder.
 - **Search** 
 - **Eject** 
 - **Skip**
-- **Resume Play Mode**
-- **Incremental Playback**
+
 - **Clear**
-- **Remote/Local Select**
-- **Play Mode Select**
-- **Current Track Time**
-- **Device Select**
-- **Play Area Select**
 - **Enter**
 - **Back**
+
+- **Current Track Time**
+- **Device Select**
+- **Incremental Playback**
+- **Play Area Select**
+- **Play Mode Select**
+- **Remote/Local Select**
+- **Resume Play Mode**
 
 ## Variables
 - **Track Number**
@@ -32,16 +34,16 @@ Enter the IP address, port and password of the recorder.
 - **Device Status**
 
 ## Feedbacks
-- **Resume Play**
-- **Repeat**
-- **Incremental Play**
-- **Remote/Local Control**
-- **Play Mode**
-- **Mecha Status**
-- **Error State**
 - **Caution State**
 - **Device Select**
+- **Error State**
+- **Incremental Play**
+- **Mecha Status**
 - **Play Area**
+- **Play Mode**
+- **Remote/Local Control**
+- **Repeat**
+- **Resume Play**
 
 ## Version History
 

@@ -2,7 +2,7 @@
 	"id": "tascam-cd-400u",
 	"name": "tascam-cd-400u",
 	"shortname": "CD-400U",
-	"description": "Bitfocus Companion for the Tascam Cd-400U Media Player",
+	"description": "Bitfocus Companion module for the Tascam CD-400U Media Player",
 	"version": "1.0.0",
 	"license": "MIT",
 	"repository": "git+",
@@ -21,6 +21,6 @@
 	},
 	"legacyIds": [],
 	"manufacturer": "Tascam",
-	"products": ["Cd-400U"],
-	"keywords": ["Hardware", "Audio", "CD", "Bluetooth"]
+	"products": ["Cd-400U", "CD-400U DAB"],
+	"keywords": ["Hardware", "Audio", "CD", "Bluetooth", "USB", "Radio", "AM", "FM", "DAB", "SD"]
 }

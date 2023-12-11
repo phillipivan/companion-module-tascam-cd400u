@@ -1,0 +1,26 @@
+{
+	"id": "tascam-cd-400u",
+	"name": "tascam-cd-400u",
+	"shortname": "CD-400U",
+	"description": "Bitfocus Companion for the Tascam Cd-400U Media Player",
+	"version": "1.0.0",
+	"license": "MIT",
+	"repository": "git+",
+	"bugs": "",
+	"maintainers": [
+		{
+			"name": "Phillip Ivan Pietruschka",
+			"email": "ivanpietruschka@gmail.com"
+		}
+	],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../src/main.js"
+	},
+	"legacyIds": [],
+	"manufacturer": "Tascam",
+	"products": ["Cd-400U"],
+	"keywords": ["Hardware", "Audio", "CD", "Bluetooth"]
+}

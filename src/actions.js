@@ -23,24 +23,6 @@ module.exports = function (self) {
 			//learn: async () => {},
 			//subscribe: async () => {},
 		},
-		record: {
-			name: 'Record',
-			description: 'Record',
-			options: [
-				{
-					type: 'dropdown',
-					id: 'mode',
-					label: 'Mode',
-					choices: self.record_mode,
-					default: '00',
-				},
-			],
-			callback: async ({ options }) => {
-				self.addCmdtoQueue(SOM + cmd.record + options.mode)
-			},
-			//learn: async () => {},
-			//subscribe: async () => {},
-		},
 		pause: {
 			name: 'Pause',
 			description: 'Pause',

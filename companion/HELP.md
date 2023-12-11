@@ -10,19 +10,38 @@ Enter the IP address, port and password of the recorder.
 ## Actions
 - **Stop** 
 - **Play** 
-- **Record** 
 - **Pause** 
 - **Search** 
+- **Eject** 
 - **Skip**
+- **Resume Play Mode**
+- **Incremental Playback**
+- **Clear**
+- **Remote/Local Select**
+- **Play Mode Select**
+- **Current Track Time**
+- **Device Select**
+- **Play Area Select**
+- **Enter**
+- **Back**
 
 ## Variables
 - **Track Number**
+- **Error Status**
+- **Caution Status**
+- **Device Status**
 
 ## Feedbacks
+- **Resume Play**
+- **Repeat**
+- **Incremental Play**
+- **Remote/Local Control**
+- **Play Mode**
 - **Mecha Status**
-- **Caution**
-- **Error**
-
+- **Error State**
+- **Caution State**
+- **Device Select**
+- **Play Area**
 
 ## Version History
 

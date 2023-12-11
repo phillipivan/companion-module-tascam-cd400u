@@ -5,37 +5,31 @@ module.exports = function (self) {
 	self.setActionDefinitions({
 		stop: {
 			name: 'Stop',
-			description: 'Stop',
+			description: '',
 			options: [],
 			callback: async () => {
 				self.addCmdtoQueue(SOM + cmd.stop)
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 		play: {
 			name: 'Play',
-			description: 'Play',
+			description: '',
 			options: [],
 			callback: async () => {
 				self.addCmdtoQueue(SOM + cmd.play)
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 		pause: {
 			name: 'Pause',
-			description: 'Pause',
+			description: '',
 			options: [],
 			callback: async () => {
 				self.addCmdtoQueue(SOM + cmd.pause + '01')
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 		search: {
 			name: 'Search',
-			description: 'Search',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
@@ -48,22 +42,18 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.search + options.mode)
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 		eject: {
 			name: 'Eject',
-			description: 'Eject',
+			description: '',
 			options: [],
 			callback: async () => {
 				self.addCmdtoQueue(SOM + cmd.eject)
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 		skip: {
 			name: 'Skip',
-			description: 'Skip',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
@@ -76,17 +66,15 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.skip + options.mode)
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 		resumePlaySelectMode: {
 			name: 'Resume Play Mode',
-			description: 'Resume Play Mode',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
 					id: 'mode',
-					label: 'Mode',
+					label: 'Resume Play Mode',
 					choices: self.resumePlay_mode,
 					default: '00',
 				},
@@ -99,12 +87,12 @@ module.exports = function (self) {
 		},
 		repeatMode: {
 			name: 'Repeat Mode',
-			description: 'Repeat Mode',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
 					id: 'mode',
-					label: 'Mode',
+					label: 'Repeat Mode',
 					choices: self.repeat_mode,
 					default: '00',
 				},
@@ -117,7 +105,7 @@ module.exports = function (self) {
 		},
 		incrPlaySelect: {
 			name: 'Incremental Playback',
-			description: 'Incremental Playback',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
@@ -135,7 +123,7 @@ module.exports = function (self) {
 		},
 		clear: {
 			name: 'Clear',
-			description: 'Clear',
+			description: '',
 			options: [],
 			callback: async () => {
 				self.addCmdtoQueue(SOM + cmd.clear)
@@ -145,12 +133,12 @@ module.exports = function (self) {
 		},
 		remoteLocalMode: {
 			name: 'Remote/Local Select',
-			description: 'Remote/Local Select',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
 					id: 'mode',
-					label: 'Mode',
+					label: 'Control Mode',
 					choices: self.remoteLocal_mode,
 					default: '00',
 				},
@@ -163,12 +151,12 @@ module.exports = function (self) {
 		},
 		playMode: {
 			name: 'Play Mode Select',
-			description: 'Play Mode Select',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
 					id: 'mode',
-					label: 'Mode',
+					label: 'Play Mode',
 					choices: self.play_mode,
 					default: '00',
 				},
@@ -181,14 +169,14 @@ module.exports = function (self) {
 		},
 		currentTrackTime: {
 			name: 'Current Track Time',
-			description: 'Current Track Time',
+			description: '',
 			options: [
 				{
 					type: 'dropdown',
 					id: 'mode',
-					label: 'Mode',
+					label: 'Time Mode',
 					choices: self.currentTrackTime_sense,
-					default: '10',
+					default: '00',
 				},
 			],
 			callback: async ({ options }) => {
@@ -249,8 +237,6 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.enter + options.mode)
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 		back: {
 			name: 'Back',
@@ -267,8 +253,6 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.back + options.mode)
 			},
-			//learn: async () => {},
-			//subscribe: async () => {},
 		},
 	})
 }

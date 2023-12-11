@@ -91,9 +91,4 @@ export const cmdOnLogin = [
 	cmd.playAreaSelect + 'FF',
 ]
 
-export const cmdOnKeepAlive = [
-	cmd.mechaStatusSense,
-	cmd.trackNumSense,
-	cmd.currentTrackInfoSense,
-	cmd.currentTrackTimeSense + this.recorder.track.currentTrackTime,
-]
+export const cmdOnKeepAlive = [cmd.mechaStatusSense, cmd.trackNumSense, cmd.currentTrackInfoSense]

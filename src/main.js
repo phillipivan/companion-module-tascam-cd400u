@@ -9,7 +9,7 @@ const tcp = require('./tcp.js')
 const processCmd = require('./processcmd.js')
 const { EndSession, msgDelay } = require('./consts.js')
 
-class TASCAM_DA_6400 extends InstanceBase {
+class TASCAM_CD_400U extends InstanceBase {
 	constructor(internal) {
 		super(internal)
 		Object.assign(this, { ...config, ...tcp, ...processCmd, ...choices })
@@ -47,6 +47,9 @@ class TASCAM_DA_6400 extends InstanceBase {
 	updateVariableValues() {
 		let varList = []
 		varList['trackNo'] = 'unknown'
+		varList['errorStatus'] = 'unknown'
+		varList['cautionStatus'] = 'unknown'
+		varList['deviceStatus'] = 'unknown'
 		this.setVariableValues(varList)
 	}
 
@@ -62,7 +65,6 @@ class TASCAM_DA_6400 extends InstanceBase {
 			caution: 'unknown',
 			device: 'unknown',
 			playArea: 'unknown',
-			psuError: false,
 			track: {
 				number: 'unknown',
 				currentTrackTime: '00',
@@ -83,4 +85,4 @@ class TASCAM_DA_6400 extends InstanceBase {
 	}
 }
 
-runEntrypoint(TASCAM_DA_6400, UpgradeScripts)
+runEntrypoint(TASCAM_CD_400U, UpgradeScripts)

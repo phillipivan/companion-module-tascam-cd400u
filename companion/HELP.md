@@ -5,7 +5,7 @@ This module will control the Tascam CD-400U when fitted with an IF-E100 Ethernet
 - [Tascam CD-400U Page](https://tascam.com/us/product/cd-400u/)
 
 ## Configuration
-Enter the IP address, and port of the media player.
+Enter the IP address, and port of the media player. If using CD-400U DAB, enable the DAB check box.
 
 ## Actions
 - **Stop** 
@@ -28,7 +28,8 @@ Enter the IP address, and port of the media player.
 - **Resume Play Mode**
 
 ## Variables
-- **Track Number**
+- **Track Number** Reports preset number when using radio
+- **Track Time** Reports frequency / channel when using radio
 - **Error Status**
 - **Caution Status**
 - **Device Status**

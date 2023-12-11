@@ -29,6 +29,14 @@ module.exports = {
 				default: 23,
 				tooltip: 'Port is not configurable on unit, only change in advanced configurations',
 			},
+			{
+				type: 'checkbox',
+				id: 'dab',
+				label: 'DAB',
+				width: 4,
+				default: false,
+				tooltip: 'Is CD-400U DAB',
+			},
 		]
 	},
 }

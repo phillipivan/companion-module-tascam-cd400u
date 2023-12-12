@@ -21,6 +21,6 @@
 	},
 	"legacyIds": [],
 	"manufacturer": "Tascam",
-	"products": ["Cd-400U", "CD-400U DAB"],
+	"products": ["CD-400U", "CD-400U DAB"],
 	"keywords": ["Hardware", "Audio", "CD", "Bluetooth", "USB", "Radio", "AM", "FM", "DAB", "SD"]
 }

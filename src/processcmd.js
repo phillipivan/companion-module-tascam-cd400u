@@ -1,4 +1,4 @@
-const { resp, cmd, SOM } = require('./consts.js')
+const { resp, cmd, SOM, cmdOnLogin } = require('./consts.js')
 
 module.exports = {
 	async processCmd(chunk) {

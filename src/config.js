@@ -29,6 +29,15 @@ module.exports = {
 				default: 23,
 				tooltip: 'Port is not configurable on unit, only change in advanced configurations',
 			},
+						{
+				type: 'textinput',
+				id: 'password',
+				label: 'Password',
+				width: 6,
+				default: '',
+				regex: '/^[0-9]{0,10}/g',
+				tooltip: 'Password may be zero to ten numeric characters',
+			},
 			{
 				type: 'checkbox',
 				id: 'dab',

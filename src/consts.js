@@ -36,6 +36,7 @@ export const cmd = {
 }
 
 export const resp = {
+	welcome: 'WELCOME TO THE CD-400U TELNET SERVER!!',
 	password: 'Enter Password',
 	loginSuccess: 'Login Successful',
 	keepAlive: 'FA',

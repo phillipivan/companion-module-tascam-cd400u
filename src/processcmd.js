@@ -82,18 +82,30 @@ module.exports = {
 							param[1] = `${reply[12]}${reply[13]}` //DAB Service Number
 							param[2] = `${reply[9]}${reply[10]}${reply[11]}` // DAB Channel Number
 							this.recorder.track.currentTrackTime = `${param[1]}:${param[2]}`
+							varList['trackTimeHours'] = ''
+							varList['trackTimeMinutes'] = ''
+							varList['trackTimeSeconds'] = ''
 						} else {
 							param[1] = parseInt(`${reply[9]}${reply[10]}${reply[11]}${reply[12]}${reply[13]}`) / 100
 							this.recorder.track.currentTrackTime = param[1] + ' MHz'
+							varList['trackTimeHours'] = ''
+							varList['trackTimeMinutes'] = ''
+							varList['trackTimeSeconds'] = ''
 						}
 						break
 					case '31': //AM Radio or FM on CD-400U DAB
 						if (this.config.dab) {
 							param[1] = parseInt(`${reply[9]}${reply[10]}${reply[11]}${reply[12]}${reply[13]}`) / 100
 							this.recorder.track.currentTrackTime = param[1] + ' MHz'
+							varList['trackTimeHours'] = ''
+							varList['trackTimeMinutes'] = ''
+							varList['trackTimeSeconds'] = ''
 						} else {
 							param[1] = parseInt(`${reply[9]}${reply[10]}${reply[11]}${reply[12]}${reply[13]}`)
 							this.recorder.track.currentTrackTime = param[1] + ' KHz'
+							varList['trackTimeHours'] = ''
+							varList['trackTimeMinutes'] = ''
+							varList['trackTimeSeconds'] = ''
 						}
 						break
 					case '00': //sd card
@@ -107,6 +119,9 @@ module.exports = {
 						param[3] = param[1] % 60
 						param[4] = parseInt(`${reply[13]}${reply[14]}`) //seconds
 						this.recorder.track.currentTrackTime = `${param[2]}:${param[3]}:${param[4]}`
+						varList['trackTimeHours'] = param[2]
+						varList['trackTimeMinutes'] = param[3]
+						varList['trackTimeSeconds'] = param[4]
 				}
 				varList['trackTime'] = this.recorder.track.currentTrackTime
 				this.setVariableValues(varList)

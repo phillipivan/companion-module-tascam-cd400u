@@ -48,6 +48,9 @@ class TASCAM_CD_400U extends InstanceBase {
 		let varList = []
 		varList['trackNo'] = 'unknown'
 		varList['trackTime'] = 'unknown'
+		varList['trackTimeHours'] = ''
+		varList['trackTimeMinutes'] = ''
+		varList['trackTimeSeconds'] = ''
 		varList['errorStatus'] = 'unknown'
 		varList['cautionStatus'] = 'unknown'
 		varList['deviceStatus'] = 'unknown'

@@ -82,7 +82,13 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.resumePlaySelect + options.mode)
 			},
-			//learn: async () => {},
+			learn: async (action) => {
+				const mode = self.recorder.remoteLocal == 'unknown' ? '00' : self.recorder.remoteLocal
+				return {
+					...action.options,
+					mode: mode,
+				}
+			},
 			subscribe: async () => {
 				self.addCmdtoQueue(SOM + cmd.resumePlaySelect + 'FF')
 			},
@@ -102,7 +108,13 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.repeatModeSelect + options.mode)
 			},
-			//learn: async () => {},
+			learn: async (action) => {
+				const mode = self.recorder.repeat == 'unknown' ? '00' : self.recorder.repeat
+				return {
+					...action.options,
+					mode: mode,
+				}
+			},
 			subscribe: async () => {
 				self.addCmdtoQueue(SOM + cmd.repeatModeSelect + 'FF')
 			},
@@ -122,7 +134,13 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.incrPlaySelect + options.mode)
 			},
-			//learn: async () => {},
+			learn: async (action) => {
+				const mode = self.recorder.incrPlay == 'unknown' ? '00' : self.recorder.incrPlay
+				return {
+					...action.options,
+					mode: mode,
+				}
+			},
 			subscribe: async () => {
 				self.addCmdtoQueue(SOM + cmd.incrPlaySelect + 'FF')
 			},
@@ -152,7 +170,13 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.remoteLocalModeSelect + options.mode)
 			},
-			//learn: async () => {},
+			learn: async (action) => {
+				const mode = self.recorder.remoteLocal == 'unknown' ? '00' : self.recorder.remoteLocal
+				return {
+					...action.options,
+					mode: mode,
+				}
+			},
 			subscribe: async () => {
 				self.addCmdtoQueue(SOM + cmd.remoteLocalModeSelect + 'FF')
 			},
@@ -172,7 +196,13 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.playModeSelect + options.mode)
 			},
-			//learn: async () => {},
+			learn: async (action) => {
+				const mode = self.recorder.playMode == 'unknown' ? '00' : self.recorder.playMode
+				return {
+					...action.options,
+					mode: mode,
+				}
+			},
 			subscribe: async () => {
 				self.addCmdtoQueue(SOM + cmd.playModeSense)
 			},
@@ -213,7 +243,13 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.deviceSelect + options.mode)
 			},
-			//learn: async () => {},
+			learn: async (action) => {
+				const mode = self.recorder.device == 'unknown' ? '10' : self.recorder.device
+				return {
+					...action.options,
+					mode: mode,
+				}
+			},
 			subscribe: async () => {
 				self.addCmdtoQueue(SOM + cmd.deviceSelect + 'FF')
 			},
@@ -233,7 +269,13 @@ module.exports = function (self) {
 			callback: async ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.playAreaSelect + options.mode)
 			},
-			//learn: async () => {},
+			learn: async (action) => {
+				const mode = self.recorder.playArea == 'unknown' ? '00' : self.recorder.playArea
+				return {
+					...action.options,
+					mode: mode,
+				}
+			},
 			subscribe: async () => {
 				self.addCmdtoQueue(SOM + cmd.playAreaSelect + 'FF')
 			},

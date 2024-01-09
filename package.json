@@ -11,7 +11,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+"
+		"url": "git+https://github.com/bitfocus/companion-module-tascam-cd400u.git"
 	},
 	"dependencies": {
 		"@companion-module/base": "~1.7.0"

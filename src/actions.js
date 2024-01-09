@@ -83,7 +83,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.resumePlaySelect + options.mode)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.resumePlaySelect + 'FF')
+			},
 		},
 		repeatMode: {
 			name: 'Repeat Mode',
@@ -101,7 +103,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.repeatModeSelect + options.mode)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.repeatModeSelect + 'FF')
+			},
 		},
 		incrPlaySelect: {
 			name: 'Incremental Playback',
@@ -119,7 +123,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.incrPlaySelect + options.mode)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.incrPlaySelect + 'FF')
+			},
 		},
 		clear: {
 			name: 'Clear',
@@ -147,7 +153,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.remoteLocalModeSelect + options.mode)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.remoteLocalModeSelect + 'FF')
+			},
 		},
 		playMode: {
 			name: 'Play Mode Select',
@@ -165,7 +173,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.playModeSelect + options.mode)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.playModeSense)
+			},
 		},
 		currentTrackTime: {
 			name: 'Current Track Time',
@@ -184,7 +194,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.currentTrackTimeSense + self.recorder.track.currentTrackTime)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.currentTrackInfoSense)
+			},
 		},
 		deviceSelect: {
 			name: 'Device Select',
@@ -202,7 +214,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.deviceSelect + options.mode)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.deviceSelect + 'FF')
+			},
 		},
 		playAreaSelect: {
 			name: 'Play Area Select',
@@ -220,7 +234,9 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.playAreaSelect + options.mode)
 			},
 			//learn: async () => {},
-			//subscribe: async () => {},
+			subscribe: async () => {
+				self.addCmdtoQueue(SOM + cmd.playAreaSelect + 'FF')
+			},
 		},
 		enter: {
 			name: 'Enter',

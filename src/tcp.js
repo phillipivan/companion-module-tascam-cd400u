@@ -42,9 +42,11 @@ module.exports = {
 
 	//queries made on initial connection.
 	async queryOnConnect() {
-		this.sendCommand('  ')
-		for (let i = 0; i < cmdOnLogin.length; i++) {
-			this.addCmdtoQueue(SOM + cmdOnLogin[i])
+		//this.sendCommand('  ')
+		if (this.config.password == '') {
+			for (let i = 0; i < cmdOnLogin.length; i++) {
+				this.addCmdtoQueue(SOM + cmdOnLogin[i])
+			}
 		}
 		return true
 	},

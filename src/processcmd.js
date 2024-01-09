@@ -1,11 +1,14 @@
-const { resp, cmd, SOM } = require('./consts.js')
+const { resp, cmd, SOM, cmdOnLogin } = require('./consts.js')
 
 module.exports = {
 	async processCmd(chunk) {
 		let reply = chunk.toString()
 		this.log('debug', `response recieved: ${reply}`)
 
-		/* 		switch (reply) {
+		switch (reply) {
+			case resp.welcome:
+				this.sendCommand('  ')
+				break
 			case resp.password:
 				this.addCmdtoQueue(this.config.password)
 				return true
@@ -16,7 +19,7 @@ module.exports = {
 					this.addCmdtoQueue(SOM + cmdOnLogin[i])
 				}
 				return true
-		} */
+		}
 		while (reply[0] != SOM && reply.length > 0) {
 			reply = reply.slice(1)
 		}

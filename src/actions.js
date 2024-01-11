@@ -1,5 +1,6 @@
-//const { Regex } = require('@companion-module/base')
+const { Regex } = require('@companion-module/base')
 const { SOM, cmd } = require('./consts.js')
+const padding = '0000'
 
 module.exports = function (self) {
 	self.setActionDefinitions({
@@ -69,6 +70,35 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.skip + options.mode)
 			},
 		},
+
+		directTrackSearchPreset: {
+			name: 'Direct Track Search Preset',
+			description:
+				'DIRECT TRACK SEARCH PRESET performs a search for a track on the controlled device by specifying the track number. If a track search is performed while the controlled device is in a stop state, the controlled device remains in the stop state at the beginning of the selected track. If a track search is performed while the controlled device is in a state other than the above state, the controlled device switches back to the state where it was before starting a search and remains in that state. When the source is AM, FM or DAB, this performs selection of a preset station by specifying the preset number.',
+			options: [
+				{
+					type: 'textinput',
+					id: 'track',
+					label: 'Track',
+					default: '0001',
+					regex: Regex.SOMETHING, ///^[0-9]{4}/g',
+					useVariables: true,
+					tooltip: 'Must be a one to four digit integer. Radio preset must be <=20.',
+				},
+			],
+			callback: async ({ options }) => {
+				let take = parseInt(await self.parseVariablesInString(options.track))
+				if (isNaN(take)) {
+					self.log('warn', `varible passed must be a number: ${take}`)
+					return undefined
+				}
+				take = (padding + take).substr(-4)
+				self.addCmdtoQueue(SOM + cmd.takeErase + take[2] + take[3] + take[0] + take[1])
+			},
+			//learn: async () => {},
+			//subscribe: async () => {},
+		},
+
 		resumePlaySelectMode: {
 			name: 'Resume Play Mode',
 			description: 'RESUME PLAY SELECT turns the resume play mode of the controlled device on or off.',

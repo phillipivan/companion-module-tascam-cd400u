@@ -4,7 +4,6 @@ module.exports = {
 	async processCmd(chunk) {
 		let reply = chunk.toString()
 		this.log('debug', `message recieved: ${reply}`)
-
 		switch (reply) {
 			case resp.welcome:
 				//this.log('debug', 'weclome message found sending white space')
@@ -46,9 +45,10 @@ module.exports = {
 		let varList = []
 		switch (response) {
 			case resp.keepAlive:
-				this.log('debug', `keepAlive`)
+				this.log('debug', `keepAlive message recieved: ${reply}`)
 				break
 			case resp.infoReturn:
+				this.log('info', `Firmware Version: ${reply.substr(3, 2)}.${reply.substr(5, 2)}`)
 				break
 			case resp.resumePlaySelectReturn:
 				param[0] = reply.substr(3, 2)
@@ -196,7 +196,7 @@ module.exports = {
 					default:
 						//Shouldn't occur
 						this.log('warn', `errorSenseReturn: Switch Default: ${param[0]}`)
-						varList['errorStatus'] = 'Switch Default'
+						varList['errorStatus'] = `Switch Default, Unknown: ${param[0]}`
 				}
 				this.recorder.error = param[0]
 				this.setVariableValues(varList)
@@ -258,7 +258,7 @@ module.exports = {
 					default:
 						//Shouldn't occur
 						this.log('warn', `cautionSenseReturn: Switch Default: ${param[0]}`)
-						varList['cautionStatus'] = 'Switch Default'
+						varList['cautionStatus'] = `Switch Default, Unknown: ${param[0]}`
 				}
 				this.recorder.caution = param[0]
 				this.setVariableValues(varList)
@@ -293,7 +293,7 @@ module.exports = {
 								varList['deviceStatus'] = 'AUX'
 								break
 							default:
-								varList['deviceStatus'] = 'Switch Default'
+								varList['deviceStatus'] = `Unknown: ${param[0]}`
 						}
 						this.setVariableValues(varList)
 						this.checkFeedbacks('deviceSelect')

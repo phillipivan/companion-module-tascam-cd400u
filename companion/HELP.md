@@ -14,6 +14,7 @@ Enter the IP address, and port of the media player. If using CD-400U DAB, enable
 - **Search** 
 - **Eject** 
 - **Skip**
+- **Direct Track Search Preset**
 
 - **Clear**
 - **Enter**

@@ -1,4 +1,4 @@
-const { resp, cmd, SOM, cmdOnLogin, keepAliveInterval } = require('./consts.js')
+const { resp, cmd, SOM, cmdOnLogin } = require('./consts.js')
 
 module.exports = {
 	async processCmd(chunk) {
@@ -17,13 +17,13 @@ module.exports = {
 			case resp.loginSuccess:
 				this.updateStatus('ok', 'Logged in')
 				this.log('info', 'OK: Logged In')
+				this.stopTimeOut()
 				this.startCmdQueue()
 				for (let i = 0; i < cmdOnLogin.length; i++) {
 					this.addCmdtoQueue(SOM + cmdOnLogin[i])
 				}
-				this.keepAliveTimer = setTimeout(() => {
-					this.keepAlive()
-				}, keepAliveInterval)
+				this.startKeepAlive()
+
 				return true
 			case resp.loginFail:
 				this.log('error', 'Login Failure! Incorrect Password.')

@@ -9,6 +9,7 @@ const {
 	keepAliveInterval,
 	resp,
 	cmdOnLogin,
+	timeOutInterval,
 } = require('./consts.js')
 
 module.exports = {
@@ -36,12 +37,14 @@ module.exports = {
 	},
 
 	startCmdQueue() {
+		this.log('debug', 'starting cmdTimer')
 		this.cmdTimer = setTimeout(() => {
 			this.processCmdQueue()
 		}, msgDelay)
 	},
 
 	stopCmdQueue() {
+		this.log('debug', 'stopping cmdTimer')
 		clearTimeout(this.cmdTimer)
 	},
 
@@ -65,13 +68,12 @@ module.exports = {
 		this.sendCommand('  ')
 		if (this.config.password === '') {
 			this.log('debug', 'no password')
+			this.stopTimeOut()
 			this.startCmdQueue()
 			for (let i = 0; i < cmdOnLogin.length; i++) {
 				this.addCmdtoQueue(SOM + cmdOnLogin[i])
 			}
-			this.keepAliveTimer = setTimeout(() => {
-				this.keepAlive()
-			}, keepAliveInterval)
+			this.startKeepAlive()
 		}
 		return true
 	},
@@ -87,12 +89,47 @@ module.exports = {
 		}, keepAliveInterval)
 	},
 
+	startKeepAlive() {
+		this.log('debug', 'starting keepAliveTimer')
+		this.keepAliveTimer = setTimeout(() => {
+			this.keepAlive()
+		}, keepAliveInterval)
+	},
+
+	stopKeepAlive() {
+		this.log('debug', 'stopping keepAliveTimer')
+		clearTimeout(this.keepAliveTimer)
+	},
+
+	timeOut() {
+		//dump cmdQueue to prevent excessive queuing of old commands
+		this.cmdQueue = []
+		this.timeOutTimer = setTimeout(() => {
+			this.timeOut()
+		}, timeOutInterval)
+	},
+
+	startTimeOut() {
+		this.log('debug', 'starting timeOutTimer')
+		this.timeOutTimer = setTimeout(() => {
+			this.timeOut()
+		}, timeOutInterval)
+	},
+
+	stopTimeOut() {
+		this.log('debug', 'stopping timeOutTimer')
+		clearTimeout(this.timeOutTimer)
+	},
+
 	initTCP() {
 		this.receiveBuffer = ''
 		if (this.socket !== undefined) {
 			this.sendCommand(EndSession)
 			this.socket.destroy()
 			delete this.socket
+			this.startTimeOut()
+			this.stopCmdQueue()
+			this.stopKeepAlive()
 		}
 		if (this.config.host) {
 			this.log('debug', 'Creating New Socket')
@@ -105,8 +142,9 @@ module.exports = {
 			})
 			this.socket.on('error', (err) => {
 				this.log('error', `Network error: ${err.message}`)
+				this.stopKeepAlive()
+				this.startTimeOut()
 				this.stopCmdQueue()
-				clearTimeout(this.keepAliveTimer)
 			})
 			this.socket.on('connect', () => {
 				this.log('info', `Connected to ${this.config.host}:${this.config.port}`)

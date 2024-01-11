@@ -15,12 +15,14 @@ class TASCAM_CD_400U extends InstanceBase {
 		Object.assign(this, { ...config, ...tcp, ...processCmd, ...choices })
 		this.keepAliveTimer = {}
 		this.cmdTimer = {}
+		this.timeOutTimer = {}
 		this.cmdQueue = []
 	}
 	async init(config) {
 		this.updateStatus('Starting')
 		this.config = config
 		this.initVariables()
+		this.startTimeOut()
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
@@ -30,10 +32,12 @@ class TASCAM_CD_400U extends InstanceBase {
 	// When module gets deleted
 	async destroy() {
 		this.log('debug', `destroy. ID: ${this.id}`)
-		clearTimeout(this.keepAliveTimer)
+		this.stopKeepAlive()
 		this.stopCmdQueue()
+		this.stopTimeOut()
 		this.keepAliveTimer = null
 		this.cmdTimer = null
+		this.timeOutTimer = null
 		if (this.socket) {
 			this.sendCommand(EndSession)
 			this.socket.destroy()

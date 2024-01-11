@@ -1,5 +1,6 @@
 export const msgDelay = 110 // Make sure that commands are sent at a minimum of 100-millisecond intervals.
 export const keepAliveInterval = 1000
+export const timeOutInterval = 10000 // empty cmdQueue every ten seconds when not logged in to prevent excessive queueing of old cmds.
 export const SOM = '0'
 export const EOM = '\r\n'
 export const EndSession = 'exit'

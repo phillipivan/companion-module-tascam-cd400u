@@ -1,23 +1,36 @@
-const { resp, cmd, SOM, cmdOnLogin } = require('./consts.js')
+const { resp, cmd, SOM, cmdOnLogin, keepAliveInterval } = require('./consts.js')
 
 module.exports = {
 	async processCmd(chunk) {
 		let reply = chunk.toString()
-		this.log('debug', `response recieved: ${reply}`)
+		this.log('debug', `message recieved: ${reply}`)
 
 		switch (reply) {
 			case resp.welcome:
+				//this.log('debug', 'weclome message found sending white space')
 				this.sendCommand('  ')
-				break
+				return true
 			case resp.password:
-				this.addCmdtoQueue(this.config.password)
+				this.log('debug', 'password request found, sending password')
+				this.sendCommand(this.config.password)
 				return true
 			case resp.loginSuccess:
 				this.updateStatus('ok', 'Logged in')
 				this.log('info', 'OK: Logged In')
+				this.startCmdQueue()
 				for (let i = 0; i < cmdOnLogin.length; i++) {
 					this.addCmdtoQueue(SOM + cmdOnLogin[i])
 				}
+				this.keepAliveTimer = setTimeout(() => {
+					this.keepAlive()
+				}, keepAliveInterval)
+				return true
+			case resp.loginFail:
+				this.log('error', 'Login Failure! Incorrect Password.')
+				this.stopCmdQueue()
+				return false
+			case resp.prompt:
+				this.log('debug', 'prompt found')
 				return true
 		}
 		while (reply[0] != SOM && reply.length > 0) {
@@ -28,6 +41,7 @@ module.exports = {
 		}
 		let response = reply.substr(1, 2)
 		let venderCmd = reply.substr(1, 6)
+		venderCmd = venderCmd.substr(0, 4) == resp.deviceSelectReturn ? venderCmd.substr(0, 4) : venderCmd
 		let param = []
 		let varList = []
 		switch (response) {
@@ -38,32 +52,32 @@ module.exports = {
 				break
 			case resp.resumePlaySelectReturn:
 				param[0] = reply.substr(3, 2)
-				this.recorder.resumePlay = param[0] === undefined ? this.recoder.resumePlay : param[0]
+				this.recorder.resumePlay = param[0] === undefined ? this.recorder.resumePlay : param[0]
 				this.checkFeedbacks('resumePlay')
 				break
 			case resp.repeatModeSelectReturn:
 				param[0] = reply.substr(3, 2)
-				this.recorder.repeat = param[0] === undefined ? this.recoder.repeat : param[0]
+				this.recorder.repeat = param[0] === undefined ? this.recorder.repeat : param[0]
 				this.checkFeedbacks('repeat')
 				break
 			case resp.incrPlaySelectReturn:
 				param[0] = reply.substr(3, 2)
-				this.recorder.incrPlay = param[0] === undefined ? this.recoder.incrPlay : param[0]
+				this.recorder.incrPlay = param[0] === undefined ? this.recorder.incrPlay : param[0]
 				this.checkFeedbacks('incrPlay')
 				break
 			case resp.remoteLocalModeReturn:
 				param[0] = reply.substr(3, 2)
-				this.recorder.remoteLocal = param[0] === undefined ? this.recoder.remoteLocal : param[0]
+				this.recorder.remoteLocal = param[0] === undefined ? this.recorder.remoteLocal : param[0]
 				this.checkFeedbacks('remoteLocal')
 				break
 			case resp.playModeReturn:
 				param[0] = reply.substr(3, 2)
-				this.recorder.playMode = param[0] === undefined ? this.recoder.playMode : param[0]
+				this.recorder.playMode = param[0] === undefined ? this.recorder.playMode : param[0]
 				this.checkFeedbacks('playMode')
 				break
 			case resp.mechaStatusReturn:
 				param[0] = reply.substr(3, 2)
-				this.recorder.mechaStatus = param[0] === undefined ? this.recoder.mechaStatus : param[0]
+				this.recorder.mechaStatus = param[0] === undefined ? this.recorder.mechaStatus : param[0]
 				this.checkFeedbacks('mechaStatus')
 				break
 			case resp.trackNoStatusReturn:
@@ -101,8 +115,9 @@ module.exports = {
 							varList['trackTimeMinutes'] = ''
 							varList['trackTimeSeconds'] = ''
 						} else {
-							param[1] = parseInt(`${reply[9]}${reply[10]}${reply[11]}${reply[12]}${reply[13]}`)
+							param[1] = parseInt(`${reply[8]}${reply[9]}${reply[10]}${reply[11]}`)
 							this.recorder.track.currentTrackTime = param[1] + ' KHz'
+							this.log('debug', `AM frequency currentTrackTime: ${this.recorder.track.currentTrackTime}`)
 							varList['trackTimeHours'] = ''
 							varList['trackTimeMinutes'] = ''
 							varList['trackTimeSeconds'] = ''
@@ -139,7 +154,8 @@ module.exports = {
 				this.addCmdtoQueue(SOM + cmd.cautionSense)
 				break
 			case resp.illegalStatus:
-				this.log('warn', 'Illegal Status: Invalid Command')
+				param[0] = reply.substr(3)
+				this.log('warn', `Illegal Status - Invalid Command: ${param[0]}`)
 				break
 			case resp.powerOnStatus:
 				this.log('info', 'powerOnStatus')
@@ -252,7 +268,8 @@ module.exports = {
 				switch (venderCmd) {
 					case resp.deviceSelectReturn:
 						param[0] = reply.substr(5, 2)
-						this.recorder.device = param[0] === undefined ? this.recoder.device : param[0]
+						this.log('debug', `deviceSelctReturn, device: ${param[0]}`)
+						this.recorder.device = param[0] === undefined ? this.recorder.device : param[0]
 						switch (param[0]) {
 							case '00':
 								varList['deviceStatus'] = 'SD'
@@ -283,7 +300,7 @@ module.exports = {
 						break
 					case resp.playAreaSelectReturn:
 						param[0] = reply.substr(7, 2)
-						this.recorder.playArea = param[0] === undefined ? this.recoder.playArea : param[0]
+						this.recorder.playArea = param[0] === undefined ? this.recorder.playArea : param[0]
 						this.checkFeedbacks('playArea')
 						break
 					default:

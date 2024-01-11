@@ -52,4 +52,4 @@ Enter the IP address, and port of the media player. If using CD-400U DAB, enable
 ## Version History
 
 ### Version 1.0.0
-- Initiail release
+- Initial release

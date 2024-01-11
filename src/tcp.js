@@ -1,19 +1,29 @@
 const { InstanceStatus, TCPHelper } = require('@companion-module/base')
-const { msgDelay, cmd, cmdOnKeepAlive, SOM, EOM, EndSession, keepAliveInterval, cmdOnLogin } = require('./consts.js')
+const {
+	msgDelay,
+	cmd,
+	cmdOnKeepAlive,
+	SOM,
+	EOM,
+	EndSession,
+	keepAliveInterval,
+	resp,
+	cmdOnLogin,
+} = require('./consts.js')
 
 module.exports = {
-	async addCmdtoQueue(msg) {
+	addCmdtoQueue(msg) {
 		if (msg !== undefined && msg.length > 0) {
-			await this.cmdQueue.push(msg)
+			this.cmdQueue.push(msg)
 			return true
 		}
 		this.log('warn', `Invalid command: ${msg}`)
 		return false
 	},
 
-	async processCmdQueue() {
+	processCmdQueue() {
 		if (this.cmdQueue.length > 0) {
-			this.sendCommand(await this.cmdQueue.splice(0, 1))
+			this.sendCommand(this.cmdQueue.splice(0, 1))
 			this.cmdTimer = setTimeout(() => {
 				this.processCmdQueue()
 			}, msgDelay)
@@ -25,7 +35,17 @@ module.exports = {
 		return undefined
 	},
 
-	async sendCommand(msg) {
+	startCmdQueue() {
+		this.cmdTimer = setTimeout(() => {
+			this.processCmdQueue()
+		}, msgDelay)
+	},
+
+	stopCmdQueue() {
+		clearTimeout(this.cmdTimer)
+	},
+
+	sendCommand(msg) {
 		if (msg !== undefined) {
 			if (this.socket !== undefined && this.socket.isConnected) {
 				this.log('debug', `Sending Command: ${msg}`)
@@ -41,12 +61,17 @@ module.exports = {
 	},
 
 	//queries made on initial connection.
-	async queryOnConnect() {
-		//this.sendCommand('  ')
-		if (this.config.password == '') {
+	queryOnConnect() {
+		this.sendCommand('  ')
+		if (this.config.password === '') {
+			this.log('debug', 'no password')
+			this.startCmdQueue()
 			for (let i = 0; i < cmdOnLogin.length; i++) {
 				this.addCmdtoQueue(SOM + cmdOnLogin[i])
 			}
+			this.keepAliveTimer = setTimeout(() => {
+				this.keepAlive()
+			}, keepAliveInterval)
 		}
 		return true
 	},
@@ -72,7 +97,7 @@ module.exports = {
 		if (this.config.host) {
 			this.log('debug', 'Creating New Socket')
 
-			this.updateStatus(`Connecting to DA-6400: ${this.config.host}:${this.config.port}`)
+			this.updateStatus(`Connecting to CD-400U: ${this.config.host}:${this.config.port}`)
 			this.socket = new TCPHelper(this.config.host, this.config.port)
 
 			this.socket.on('status_change', (status, message) => {
@@ -80,16 +105,16 @@ module.exports = {
 			})
 			this.socket.on('error', (err) => {
 				this.log('error', `Network error: ${err.message}`)
+				this.stopCmdQueue()
 				clearTimeout(this.keepAliveTimer)
 			})
 			this.socket.on('connect', () => {
 				this.log('info', `Connected to ${this.config.host}:${this.config.port}`)
+				this.receiveBuffer = ''
 				this.queryOnConnect()
-				this.keepAliveTimer = setTimeout(() => {
-					this.keepAlive()
-				}, keepAliveInterval)
 			})
 			this.socket.on('data', (chunk) => {
+				//this.log('debug', `chunk recieved: ${chunk.toString()}`)
 				let i = 0,
 					line = '',
 					offset = 0
@@ -100,6 +125,7 @@ module.exports = {
 					this.processCmd(line.toString())
 				}
 				this.receiveBuffer = this.receiveBuffer.substr(offset)
+				this.receiveBuffer = this.receiveBuffer == resp.prompt ? null : this.receiveBuffer
 			})
 		} else {
 			this.updateStatus(InstanceStatus.BadConfig)

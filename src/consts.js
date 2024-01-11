@@ -1,5 +1,4 @@
-//export const regexpAddr = new RegExp(/^.{0,6}[^.*,`"]$/g)
-export const msgDelay = 100 // Make sure that commands are sent at a minimum of 100-millisecond intervals.
+export const msgDelay = 110 // Make sure that commands are sent at a minimum of 100-millisecond intervals.
 export const keepAliveInterval = 1000
 export const SOM = '0'
 export const EOM = '\r\n'
@@ -39,6 +38,8 @@ export const resp = {
 	welcome: 'WELCOME TO THE CD-400U TELNET SERVER!!',
 	password: 'Enter Password',
 	loginSuccess: 'Login Successful',
+	loginFail: 'Password Failed',
+	prompt: 'CD-400U >',
 	keepAlive: 'FA',
 	infoReturn: '8F',
 	resumePlaySelectReturn: 'B4',

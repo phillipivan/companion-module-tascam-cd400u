@@ -7,7 +7,7 @@ const config = require('./config.js')
 const choices = require('./choices.js')
 const tcp = require('./tcp.js')
 const processCmd = require('./processcmd.js')
-const { EndSession, msgDelay } = require('./consts.js')
+const { EndSession } = require('./consts.js')
 
 class TASCAM_CD_400U extends InstanceBase {
 	constructor(internal) {
@@ -20,10 +20,7 @@ class TASCAM_CD_400U extends InstanceBase {
 	async init(config) {
 		this.updateStatus('Starting')
 		this.config = config
-		this.cmdTimer = setTimeout(() => {
-			this.processCmdQueue()
-		}, msgDelay)
-		await this.initVariables()
+		this.initVariables()
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
@@ -34,7 +31,7 @@ class TASCAM_CD_400U extends InstanceBase {
 	async destroy() {
 		this.log('debug', `destroy. ID: ${this.id}`)
 		clearTimeout(this.keepAliveTimer)
-		clearTimeout(this.cmdTimer)
+		this.stopCmdQueue()
 		this.keepAliveTimer = null
 		this.cmdTimer = null
 		if (this.socket) {

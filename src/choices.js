@@ -67,7 +67,7 @@ module.exports = {
 	back_mode: [
 		{ id: '00', label: '(Reserved) Back Key - Release' },
 		{ id: '01', label: 'Back Key - Push' },
-		{ id: '20', label: 'Back Key - Push and hold' },
+		{ id: '20', label: 'Back Key - Push and hold (Bluetooth Pairing)' },
 	],
 	//feedbacks
 	resumePlay_feedback: [
@@ -137,5 +137,9 @@ module.exports = {
 		{ id: '00', label: 'All' },
 		{ id: '01', label: 'Folder, not skip mode' },
 		{ id: '0F', label: 'Folder, skip mode' },
+	],
+	mediaStatus_feedback: [
+		{ id: '00', label: 'No Media' },
+		{ id: '01', label: 'Media Loaded' },
 	],
 }

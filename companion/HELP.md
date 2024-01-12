@@ -20,7 +20,6 @@ Enter the IP address, and port of the media player. If using CD-400U DAB, enable
 - **Enter**
 - **Back**
 
-- **Current Track Time**
 - **Device Select**
 - **Incremental Playback**
 - **Play Area Select**
@@ -29,11 +28,6 @@ Enter the IP address, and port of the media player. If using CD-400U DAB, enable
 - **Resume Play Mode**
 
 ## Variables
-- **Track Number** Reports preset number when using radio
-- **Track Time** Reports frequency / channel when using radio
-- **Track Time: Hours** Not used when using radio
-- **Track Time: Minutes** Not used when using radio
-- **Track Time: Seconds** Not used when using radio
 - **Error Status**
 - **Caution Status**
 - **Device Status**
@@ -44,6 +38,7 @@ Enter the IP address, and port of the media player. If using CD-400U DAB, enable
 - **Error State**
 - **Incremental Play**
 - **Mecha Status**
+- **Media Status**
 - **Play Area**
 - **Play Mode**
 - **Remote/Local Control**

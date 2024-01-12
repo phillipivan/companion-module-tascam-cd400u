@@ -47,11 +47,12 @@ class TASCAM_CD_400U extends InstanceBase {
 
 	updateVariableValues() {
 		let varList = []
+		/* varList['radioFreq'] = 'unknown'
 		varList['trackNo'] = 'unknown'
 		varList['trackTime'] = 'unknown'
 		varList['trackTimeHours'] = ''
 		varList['trackTimeMinutes'] = ''
-		varList['trackTimeSeconds'] = ''
+		varList['trackTimeSeconds'] = '' */
 		varList['errorStatus'] = 'unknown'
 		varList['cautionStatus'] = 'unknown'
 		varList['deviceStatus'] = 'unknown'
@@ -70,10 +71,13 @@ class TASCAM_CD_400U extends InstanceBase {
 			caution: 'unknown',
 			device: 'unknown',
 			playArea: 'unknown',
+			mediaStatus: 'unknown',
 			track: {
 				number: 'unknown',
-				currentTrackTime: '00',
+				currentTrackTime: 'unknown',
+				currentTrackTimeMode: '00',
 			},
+			frequency: 'unknown',
 		}
 	}
 

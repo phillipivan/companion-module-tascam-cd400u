@@ -1,5 +1,5 @@
-export const msgDelay = 110 // Make sure that commands are sent at a minimum of 100-millisecond intervals.
-export const keepAliveInterval = 1000
+export const msgDelay = 125 // Make sure that commands are sent at a minimum of 100-millisecond intervals.
+export const keepAliveInterval = 5000
 export const timeOutInterval = 10000 // empty cmdQueue every ten seconds when not logged in to prevent excessive queueing of old cmds.
 export const SOM = '0'
 export const EOM = '\r\n'
@@ -41,6 +41,7 @@ export const resp = {
 	loginSuccess: 'Login Successful',
 	loginFail: 'Password Failed',
 	prompt: 'CD-400U >',
+	partPrompt: '0U',
 	keepAlive: 'FA',
 	infoReturn: '8F',
 	resumePlaySelectReturn: 'B4',
@@ -50,6 +51,7 @@ export const resp = {
 	playModeReturn: 'CE',
 	mechaStatusReturn: 'D0',
 	trackNoStatusReturn: 'D5',
+	mediaStatusReturn: 'D6',
 	trackCurrentInfoReturn: 'D7',
 	trackCurrentTimeReturn: 'D8',
 	totalTrackNoTotalTimeReturn: 'DD',
@@ -92,6 +94,8 @@ export const cmdOnLogin = [
 	cmd.remoteLocalModeSelect + 'FF',
 	cmd.playModeSelect + 'FF',
 	cmd.playAreaSelect + 'FF',
+	cmd.infoReq,
+	cmd.mediaStatusSense,
 ]
 
-export const cmdOnKeepAlive = [cmd.mechaStatusSense, cmd.trackNumSense, cmd.currentTrackInfoSense]
+export const cmdOnKeepAlive = [cmd.mediaStatusSense, cmd.deviceSelect + 'FF', cmd.mechaStatusSense]

@@ -141,7 +141,21 @@ module.exports = async function (self) {
 				},
 			],
 			callback: ({ options }) => {
-				return options.status == self.recorder.mechaStatus
+				let useable
+				switch (self.recorder.device) {
+					case '00':
+					case '10':
+					case '11':
+						useable = true
+						break
+					case '20':
+					case '30':
+					case '31':
+					case '40':
+					default:
+						useable = false
+				}
+				return options.status == self.recorder.mechaStatus && useable
 			},
 			subscribe: () => {
 				self.addCmdtoQueue(SOM + cmd.mechaStatusSense)
@@ -241,6 +255,30 @@ module.exports = async function (self) {
 			},
 			subscribe: () => {
 				self.addCmdtoQueue(SOM + cmd.playAreaSelect + 'FF')
+			},
+		},
+		mediaStatus: {
+			name: 'Media Status',
+			type: 'boolean',
+			label: 'Media Status',
+			defaultStyle: {
+				bgcolor: combineRgb(255, 0, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			options: [
+				{
+					id: 'media',
+					type: 'dropdown',
+					label: 'Status',
+					choices: self.mediaStatus_feedback,
+					default: '00',
+				},
+			],
+			callback: ({ options }) => {
+				return options.media == self.recorder.mediaStatus
+			},
+			subscribe: () => {
+				self.addCmdtoQueue(SOM + cmd.mediaStatusSense)
 			},
 		},
 	})

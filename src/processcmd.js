@@ -47,6 +47,9 @@ module.exports = {
 			case resp.keepAlive:
 				this.log('debug', `keepAlive message recieved: ${reply}`)
 				break
+			case resp.partPrompt:
+				this.processCmd(reply.slice(3))
+				break
 			case resp.infoReturn:
 				this.log('info', `Firmware Version: ${reply.substr(3, 2)}.${reply.substr(5, 2)}`)
 				break
@@ -86,8 +89,13 @@ module.exports = {
 				varList['trackNo'] = this.recorder.track.number
 				this.setVariableValues(varList)
 				break
+			case resp.mediaStatusReturn:
+				param[0] = reply.substr(3, 2)
+				param[1] = reply.substr(5, 2)
+				this.recorder.mediaStatus = isNaN(param[0]) ? this.recorder.mediaStatus : param[0]
+				break
 			case resp.trackCurrentInfoReturn:
-				param[0] = parseInt(reply[7] + reply[8] + reply[5] + reply[6])
+				param[0] = parseInt(reply[5] + reply[6] + reply[3] + reply[4])
 				this.recorder.track.number = isNaN(param[0]) ? this.recorder.track.number : param[0]
 				varList['trackNo'] = this.recorder.track.number
 				switch (this.recorder.device) {
@@ -95,33 +103,37 @@ module.exports = {
 						if (this.config.dab) {
 							param[1] = `${reply[12]}${reply[13]}` //DAB Service Number
 							param[2] = `${reply[9]}${reply[10]}${reply[11]}` // DAB Channel Number
-							this.recorder.track.currentTrackTime = `${param[1]}:${param[2]}`
-							varList['trackTimeHours'] = ''
-							varList['trackTimeMinutes'] = ''
-							varList['trackTimeSeconds'] = ''
+							this.recorder.frequency = `${param[1]}-${param[2]}`
+							this.log('debug', `DAB Service-Channel: ${this.recorder.frequency}`)
 						} else {
 							param[1] = parseInt(`${reply[9]}${reply[10]}${reply[11]}${reply[12]}${reply[13]}`) / 100
-							this.recorder.track.currentTrackTime = param[1] + ' MHz'
-							varList['trackTimeHours'] = ''
-							varList['trackTimeMinutes'] = ''
-							varList['trackTimeSeconds'] = ''
+							this.recorder.frequency = param[1] + ' MHz'
+							this.log('debug', `FM frequency: ${this.recorder.frequency}`)
 						}
+						/* varList['radioFreq'] = this.recorder.frequency
+						varList['trackTimeHours'] = ''
+						varList['trackTimeMinutes'] = ''
+						varList['trackTimeSeconds'] = ''
+						varList['trackTime'] = '' */
 						break
 					case '31': //AM Radio or FM on CD-400U DAB
 						if (this.config.dab) {
 							param[1] = parseInt(`${reply[9]}${reply[10]}${reply[11]}${reply[12]}${reply[13]}`) / 100
-							this.recorder.track.currentTrackTime = param[1] + ' MHz'
-							varList['trackTimeHours'] = ''
+							this.recorder.frequency = param[1] + ' MHz'
+							this.log('debug', `FM frequency: ${this.recorder.frequency}`)
+							/* varList['trackTimeHours'] = ''
 							varList['trackTimeMinutes'] = ''
-							varList['trackTimeSeconds'] = ''
+							varList['trackTimeSeconds'] = '' */
 						} else {
 							param[1] = parseInt(`${reply[8]}${reply[9]}${reply[10]}${reply[11]}`)
-							this.recorder.track.currentTrackTime = param[1] + ' KHz'
-							this.log('debug', `AM frequency currentTrackTime: ${this.recorder.track.currentTrackTime}`)
-							varList['trackTimeHours'] = ''
-							varList['trackTimeMinutes'] = ''
-							varList['trackTimeSeconds'] = ''
+							this.recorder.frequency + ' KHz'
+							this.log('debug', `AM frequency: ${this.recorder.frequency}`)
 						}
+						/* varList['radioFreq'] = this.recorder.frequency
+						varList['trackTimeHours'] = ''
+						varList['trackTimeMinutes'] = ''
+						varList['trackTimeSeconds'] = ''
+						varList['trackTime'] = '' */
 						break
 					case '00': //sd card
 					case '10': //usb
@@ -134,14 +146,23 @@ module.exports = {
 						param[3] = param[1] % 60
 						param[4] = parseInt(`${reply[13]}${reply[14]}`) //seconds
 						this.recorder.track.currentTrackTime = `${param[2]}:${param[3]}:${param[4]}`
-						varList['trackTimeHours'] = param[2]
+					/* 	varList['trackTimeHours'] = param[2]
 						varList['trackTimeMinutes'] = param[3]
 						varList['trackTimeSeconds'] = param[4]
+						varList['trackTime'] = this.recorder.track.currentTrackTime */
 				}
-				varList['trackTime'] = this.recorder.track.currentTrackTime
 				this.setVariableValues(varList)
 				break
 			case resp.trackCurrentTimeReturn:
+				this.recorder.track.currentTrackTimeMode = parseInt(`${reply[3]}${reply[4]}`)
+				param[1] = parseInt(`${reply[7]}${reply[8]}${reply[5]}${reply[6]}`) //total minutes
+				param[2] = Math.floor(param[1] / 60)
+				param[3] = param[1] % 60
+				param[4] = parseInt(`${reply[9]}${reply[10]}`) //seconds
+				/* varList['trackTimeHours'] = param[2]
+				varList['trackTimeMinutes'] = param[3]
+				varList['trackTimeSeconds'] = param[4] */
+				this.setVariableValues(varList)
 				break
 			case resp.totalTrackNoTotalTimeReturn:
 				break
@@ -165,9 +186,12 @@ module.exports = {
 				if (param[0] == '00') {
 					//mecha status changed
 					this.addCmdtoQueue(SOM + cmd.mechaStatusSense)
+					this.addCmdtoQueue(SOM + cmd.mediaStatusSense)
 				} else if (param[0] == '03') {
 					//take number changed
-					this.addCmdtoQueue(SOM + cmd.trackNumStatusSense)
+					this.addCmdtoQueue(SOM + cmd.mechaStatusSense)
+					this.addCmdtoQueue(SOM + cmd.mediaStatusSense)
+					//this.addCmdtoQueue(SOM + cmd.trackNumSense)
 				}
 				break
 			case resp.errorSenseReturn:
@@ -284,10 +308,10 @@ module.exports = {
 								varList['deviceStatus'] = 'Bluetooth'
 								break
 							case '30':
-								varList['deviceStatus'] = 'FM (DAB CD-400UDAB)'
+								varList['deviceStatus'] = this.config.dab ? 'DAB' : 'FM'
 								break
 							case '31':
-								varList['deviceStatus'] = 'AM (FM CD-400UDAB)'
+								varList['deviceStatus'] = this.config.dab ? 'FM' : 'AM'
 								break
 							case '40':
 								varList['deviceStatus'] = 'AUX'
@@ -296,7 +320,7 @@ module.exports = {
 								varList['deviceStatus'] = `Unknown: ${param[0]}`
 						}
 						this.setVariableValues(varList)
-						this.checkFeedbacks('deviceSelect')
+						this.checkFeedbacks('deviceSelect', 'mechaStatus')
 						break
 					case resp.playAreaSelectReturn:
 						param[0] = reply.substr(7, 2)
@@ -308,7 +332,7 @@ module.exports = {
 				}
 				break
 			default:
-				this.log('warn', `Unexpected response from unit: ${reply}`)
+				this.log('debug', `Unexpected response from unit: ${reply}`)
 		}
 	},
 }

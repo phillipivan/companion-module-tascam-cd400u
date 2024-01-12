@@ -93,7 +93,7 @@ module.exports = function (self) {
 					return undefined
 				}
 				take = (padding + take).substr(-4)
-				self.addCmdtoQueue(SOM + cmd.takeErase + take[2] + take[3] + take[0] + take[1])
+				self.addCmdtoQueue(SOM + cmd.directTrackSearchPreset + take[2] + take[3] + take[0] + take[1])
 			},
 			//learn: async () => {},
 			//subscribe: async () => {},
@@ -116,7 +116,7 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.resumePlaySelect + 'FF')
 			},
 			learn: (action) => {
-				const mode = self.recorder.remoteLocal == 'unknown' ? '00' : self.recorder.remoteLocal
+				const mode = self.recorder.resumePlay == 'unknown' ? '00' : self.recorder.remoteLocal
 				return {
 					...action.options,
 					mode: mode,
@@ -244,7 +244,7 @@ module.exports = function (self) {
 				self.addCmdtoQueue(SOM + cmd.playModeSense)
 			},
 		},
-		currentTrackTime: {
+		/* currentTrackTime: {
 			name: 'Current Track Time',
 			description:
 				'CURRENT TRACK TIME SENSE requests the controlled device to return the selected time information about the current track or the whole media, when in a playback or a ready state.',
@@ -258,14 +258,14 @@ module.exports = function (self) {
 				},
 			],
 			callback: ({ options }) => {
-				self.recorder.track.currentTrackTime = options.mode
-				self.addCmdtoQueue(SOM + cmd.currentTrackTimeSense + self.recorder.track.currentTrackTime)
+				self.recorder.track.currentTrackTimeMode = options.mode
+				self.addCmdtoQueue(SOM + cmd.currentTrackTimeSense + self.recorder.track.currentTrackTimeMode)
 			},
 			//learn: () => {},
 			subscribe: () => {
 				self.addCmdtoQueue(SOM + cmd.currentTrackInfoSense)
 			},
-		},
+		}, */
 		deviceSelect: {
 			name: 'Device Select',
 			description: 'DEVICE SELECT changes the device to be used on the controlled device.',
@@ -280,6 +280,8 @@ module.exports = function (self) {
 			],
 			callback: ({ options }) => {
 				self.addCmdtoQueue(SOM + cmd.deviceSelect + options.mode)
+				this.addCmdtoQueue(SOM + cmd.mechaStatusSense)
+				this.addCmdtoQueue(SOM + cmd.mediaStatusSense)
 			},
 			learn: (action) => {
 				const mode = self.recorder.device == 'unknown' ? '10' : self.recorder.device
@@ -330,7 +332,7 @@ module.exports = function (self) {
 					id: 'mode',
 					label: 'Enter',
 					choices: self.enter_mode,
-					default: '00',
+					default: '01',
 				},
 			],
 			callback: ({ options }) => {
@@ -347,7 +349,7 @@ module.exports = function (self) {
 					id: 'mode',
 					label: 'Back',
 					choices: self.back_mode,
-					default: '00',
+					default: '01',
 				},
 			],
 			callback: ({ options }) => {

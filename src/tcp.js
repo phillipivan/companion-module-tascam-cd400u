@@ -1,7 +1,7 @@
 const { InstanceStatus, TCPHelper } = require('@companion-module/base')
 const {
 	msgDelay,
-	cmd,
+	/* 	cmd, */
 	cmdOnKeepAlive,
 	SOM,
 	EOM,
@@ -83,7 +83,9 @@ module.exports = {
 		for (let i = 0; i < cmdOnKeepAlive.length; i++) {
 			this.addCmdtoQueue(SOM + cmdOnKeepAlive[i])
 		}
-		this.addCmdtoQueue(SOM + cmd.currentTrackTimeSense + this.recorder.track.currentTrackTime)
+		/* 		if (this.recorder.device == '11') {
+			this.addCmdtoQueue(SOM + cmd.currentTrackTimeSense + this.recorder.track.currentTrackTimeMode)
+		} */
 		this.keepAliveTimer = setTimeout(() => {
 			this.keepAlive()
 		}, keepAliveInterval)

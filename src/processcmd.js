@@ -22,11 +22,12 @@ module.exports = {
 					this.addCmdtoQueue(SOM + cmdOnLogin[i])
 				}
 				this.startKeepAlive()
-
 				return true
 			case resp.loginFail:
 				this.log('error', 'Login Failure! Incorrect Password.')
 				this.stopCmdQueue()
+				this.stopKeepAlive()
+				this.startTimeOut()
 				return false
 			case resp.prompt:
 				this.log('debug', 'prompt found')

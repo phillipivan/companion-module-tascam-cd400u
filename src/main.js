@@ -35,9 +35,6 @@ class TASCAM_CD_400U extends InstanceBase {
 		this.stopKeepAlive()
 		this.stopCmdQueue()
 		this.stopTimeOut()
-		this.keepAliveTimer = null
-		this.cmdTimer = null
-		this.timeOutTimer = null
 		if (this.socket) {
 			this.sendCommand(EndSession)
 			this.socket.destroy()

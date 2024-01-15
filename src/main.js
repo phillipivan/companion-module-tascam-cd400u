@@ -13,9 +13,6 @@ class TASCAM_CD_400U extends InstanceBase {
 	constructor(internal) {
 		super(internal)
 		Object.assign(this, { ...config, ...tcp, ...processCmd, ...choices })
-		this.keepAliveTimer = {}
-		this.cmdTimer = {}
-		this.timeOutTimer = {}
 		this.cmdQueue = []
 	}
 	async init(config) {
@@ -38,6 +35,7 @@ class TASCAM_CD_400U extends InstanceBase {
 		if (this.socket) {
 			this.sendCommand(EndSession)
 			this.socket.destroy()
+			delete this.socket
 		}
 		this.updateStatus(InstanceStatus.Disconnected)
 	}

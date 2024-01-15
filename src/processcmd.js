@@ -94,6 +94,7 @@ module.exports = {
 				param[0] = reply.substr(3, 2)
 				param[1] = reply.substr(5, 2)
 				this.recorder.mediaStatus = isNaN(param[0]) ? this.recorder.mediaStatus : param[0]
+				this.checkFeedbacks('mediaStatus')
 				break
 			case resp.trackCurrentInfoReturn:
 				param[0] = parseInt(reply[5] + reply[6] + reply[3] + reply[4])
@@ -186,10 +187,12 @@ module.exports = {
 				param[0] = reply.substr(3, 2)
 				if (param[0] == '00') {
 					//mecha status changed
+					this.log('debug', `change status: mecha status changed`)
 					this.addCmdtoQueue(SOM + cmd.mechaStatusSense)
 					this.addCmdtoQueue(SOM + cmd.mediaStatusSense)
 				} else if (param[0] == '03') {
 					//take number changed
+					this.log('debug', `change status: track, tuner, preset, dab or eom status change`)
 					this.addCmdtoQueue(SOM + cmd.mechaStatusSense)
 					this.addCmdtoQueue(SOM + cmd.mediaStatusSense)
 					//this.addCmdtoQueue(SOM + cmd.trackNumSense)
@@ -293,7 +296,6 @@ module.exports = {
 				switch (venderCmd) {
 					case resp.deviceSelectReturn:
 						param[0] = reply.substr(5, 2)
-						this.log('debug', `deviceSelctReturn, device: ${param[0]}`)
 						this.recorder.device = param[0] === undefined ? this.recorder.device : param[0]
 						switch (param[0]) {
 							case '00':
@@ -320,6 +322,7 @@ module.exports = {
 							default:
 								varList['deviceStatus'] = `Unknown: ${param[0]}`
 						}
+						this.log('debug', `deviceSelctReturn, device: ${varList['deviceStatus']} value: ${param[0]}`)
 						this.setVariableValues(varList)
 						this.checkFeedbacks('deviceSelect', 'mechaStatus')
 						break

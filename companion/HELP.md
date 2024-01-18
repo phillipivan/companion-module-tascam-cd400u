@@ -7,13 +7,13 @@ This module will control the Tascam CD-400U when fitted with an IF-E100 Ethernet
 ## Configuration
 Enter the IP address, and port of the media player. If using CD-400U DAB, enable the DAB check box.
 
-It is reccomended to disable APS on the CD-400U as when in power save mode the network interface is disabled.
+It is recomended to disable APS on the CD-400U as when in power save mode the network interface is disabled.
 
 **NOTE**
 
 This module has been tested with firmware 1.42 / 0.38. It is reccomended to use this or a more recent release.
 
-Testing has revealed the unit may become non responsive to network control when a damaged CD-DA is loaded. If this occurs, it can be resolved by changing device on the unit front panel, and forcing the companion module to reconnect.
+Testing has revealed the unit may become non responsive to network control when a damaged CD-DA is loaded. If this occurs, it can be resolved by changing device on the unit front panel, and then forcing the companion module to reconnect.
 
 ## Actions
 - **Stop** 

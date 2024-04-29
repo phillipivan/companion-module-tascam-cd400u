@@ -114,7 +114,7 @@ module.exports = {
 	],
 	cautionSense_feedback: [
 		{ id: '0-00', label: 'No Caution' },
-		{ id: '0-02', label: 'Media Error' },
+		{ id: '1-02', label: 'Media Error' },
 		{ id: '1-06', label: 'Media Full' },
 		{ id: '1-0C', label: 'Write Protected' },
 		{ id: '1-0D', label: 'Not Execute' },

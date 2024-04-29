@@ -371,7 +371,7 @@ module.exports = async function (self) {
 			{
 				feedbackId: 'caution',
 				options: {
-					caution: '0-02',
+					caution: '1-02',
 				},
 				style: {
 					color: combineRgb(0, 0, 0),

@@ -100,6 +100,9 @@ RESUME PLAY SELECT turns the resume play mode of the controlled device on or off
 
 ## Version History
 
+### Version 1.1.0
+- Add device, status & transport presets, update companion-module-tools
+
 ### Version 1.0.1
 - Update help.md
 

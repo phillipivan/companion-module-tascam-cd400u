@@ -3,6 +3,7 @@ const UpgradeScripts = require('./upgrades.js')
 const UpdateActions = require('./actions.js')
 const UpdateFeedbacks = require('./feedbacks.js')
 const UpdateVariableDefinitions = require('./variables.js')
+const UpdatePresetsDefinitions = require('./presets')
 const config = require('./config.js')
 const choices = require('./choices.js')
 const tcp = require('./tcp.js')
@@ -24,6 +25,7 @@ class TASCAM_CD_400U extends InstanceBase {
 		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
 		this.updateVariableValues()
+		this.updatePresetsDefinitions()
 		this.initTCP()
 	}
 	// When module gets deleted
@@ -86,6 +88,10 @@ class TASCAM_CD_400U extends InstanceBase {
 
 	updateVariableDefinitions() {
 		UpdateVariableDefinitions(this)
+	}
+
+	updatePresetsDefinitions() {
+		UpdatePresetsDefinitions(this)
 	}
 }
 

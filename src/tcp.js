@@ -151,13 +151,14 @@ module.exports = {
 		if (this.config.host) {
 			this.log('debug', 'Creating New Socket')
 
-			this.updateStatus(`Connecting to CD-400U: ${this.config.host}:${this.config.port}`)
+			this.updateStatus(InstanceStatus.Connecting, `Connecting to CD-400U: ${this.config.host}`)
 			this.socket = new TCPHelper(this.config.host, this.config.port)
 
 			this.socket.on('status_change', (status, message) => {
 				this.updateStatus(status, message)
 			})
 			this.socket.on('error', (err) => {
+				this.updateStatus(InstanceStatus.ConnectionFailure, err.message)
 				this.log('error', `Network error: ${err.message}`)
 				this.stopKeepAlive()
 				this.startTimeOut()
@@ -165,6 +166,7 @@ module.exports = {
 			})
 			this.socket.on('connect', () => {
 				this.log('info', `Connected to ${this.config.host}:${this.config.port}`)
+				this.updateStatus(InstanceStatus.Connecting, 'Logging In')
 				this.receiveBuffer = ''
 				this.queryOnConnect()
 			})

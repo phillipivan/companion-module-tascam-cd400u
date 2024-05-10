@@ -17,7 +17,7 @@ class TASCAM_CD_400U extends InstanceBase {
 		this.cmdQueue = []
 	}
 	async init(config) {
-		this.updateStatus('Starting')
+		this.updateStatus(InstanceStatus.Connecting)
 		this.config = config
 		this.initVariables()
 		this.startTimeOut()

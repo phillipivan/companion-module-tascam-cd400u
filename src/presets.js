@@ -660,6 +660,12 @@ module.exports = async function (self) {
 			},
 		],
 	}
+	presets['skip-header'] = {
+		category: 'Transport',
+		type: 'text',
+		name: 'Skip',
+		text: '',
+	}
 	presets[`skip_back`] = {
 		type: 'button',
 		category: 'Transport',
@@ -715,6 +721,12 @@ module.exports = async function (self) {
 			},
 		],
 		feedbacks: [],
+	}
+	presets['search-header'] = {
+		category: 'Transport',
+		type: 'text',
+		name: 'Search',
+		text: '',
 	}
 	presets[`search_back`] = {
 		type: 'button',
@@ -793,6 +805,12 @@ module.exports = async function (self) {
 				},
 			},
 		],
+	}
+	presets['search-fast-header'] = {
+		category: 'Transport',
+		type: 'text',
+		name: 'Search Fast',
+		text: '',
 	}
 	presets[`search_back_fast`] = {
 		type: 'button',

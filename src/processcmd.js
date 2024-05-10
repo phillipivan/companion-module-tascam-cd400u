@@ -1,3 +1,4 @@
+const { InstanceStatus } = require('@companion-module/base')
 const { resp, cmd, SOM, cmdOnLogin } = require('./consts.js')
 
 module.exports = {
@@ -11,10 +12,11 @@ module.exports = {
 				return true
 			case resp.password:
 				this.log('debug', 'password request found, sending password')
+				this.updateStatus(InstanceStatus.Connecting, 'Logging in')
 				this.sendCommand(this.config.password)
 				return true
 			case resp.loginSuccess:
-				this.updateStatus('ok', 'Logged in')
+				this.updateStatus(InstanceStatus.Ok, 'Logged in')
 				this.log('info', 'OK: Logged In')
 				this.stopTimeOut()
 				this.startCmdQueue()
@@ -24,6 +26,7 @@ module.exports = {
 				this.startKeepAlive()
 				return true
 			case resp.loginFail:
+				this.updateStatus(InstanceStatus.BadConfig, 'Incorrect Password')
 				this.log('error', 'Login Failure! Incorrect Password.')
 				this.stopCmdQueue()
 				this.stopKeepAlive()

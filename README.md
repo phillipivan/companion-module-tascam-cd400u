@@ -1,3 +1,3 @@
-# companion-module-tascam-cd-400u
+# companion-module-tascam-cd400u
 
 See [HELP.md](./companion/HELP.md) and [LICENSE](./LICENSE)

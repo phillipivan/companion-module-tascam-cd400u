@@ -36,7 +36,7 @@ module.exports = {
 				label: 'Password',
 				width: 6,
 				default: '400',
-				regex: '/^[0-9]{0,10}/g',
+				regex: '/^[0-9]{0,10}$/',
 				tooltip: 'Password may be zero to ten numeric characters',
 			},
 			{

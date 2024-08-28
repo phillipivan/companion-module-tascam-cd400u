@@ -1,7 +1,6 @@
 const { InstanceStatus, TCPHelper } = require('@companion-module/base')
 const {
 	msgDelay,
-	/* 	cmd, */
 	cmdOnKeepAlive,
 	SOM,
 	EOM,
@@ -24,7 +23,7 @@ module.exports = {
 
 	processCmdQueue() {
 		if (this.cmdQueue.length > 0) {
-			this.sendCommand(this.cmdQueue.splice(0, 1))
+			this.sendCommand(this.cmdQueue.shift())
 			this.cmdTimer = setTimeout(() => {
 				this.processCmdQueue()
 			}, msgDelay)

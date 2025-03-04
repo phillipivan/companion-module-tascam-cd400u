@@ -82,12 +82,12 @@ module.exports = function (self) {
 					label: 'Track',
 					default: '0001',
 					regex: Regex.SOMETHING, ///^[0-9]{4}/g',
-					useVariables: true,
+					useVariables: { local: true },
 					tooltip: 'Must be a one to four digit integer. Radio preset must be <=20.',
 				},
 			],
-			callback: async ({ options }) => {
-				let take = parseInt(await self.parseVariablesInString(options.track))
+			callback: async ({ options }, context) => {
+				let take = parseInt(await context.parseVariablesInString(options.track))
 				if (isNaN(take)) {
 					self.log('warn', `varible passed must be a number: ${take}`)
 					return undefined

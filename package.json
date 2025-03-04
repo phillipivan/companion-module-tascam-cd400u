@@ -1,6 +1,6 @@
 {
 	"name": "tascam-cd400u",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"main": "src/main.js",
 	"scripts": {
 		"format": "prettier -w .",
@@ -18,12 +18,12 @@
 	},
 	"devDependencies": {
 		"@companion-module/tools": "^2.1.1",
-		"eslint": "^9.19.0",
-		"prettier": "^3.4.2"
+		"eslint": "^9.21.0",
+		"prettier": "^3.5.3"
 	},
 	"engines": {
 		"node": "^22.13"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
-	"packageManager": "yarn@4.6.0"
+	"packageManager": "yarn@4.7.0"
 }

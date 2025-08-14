@@ -1,7 +1,7 @@
-const { combineRgb } = require('@companion-module/base')
-const { SOM, cmd } = require('./consts.js')
+import { combineRgb } from '@companion-module/base'
+import { SOM, cmd } from './consts.js'
 
-module.exports = async function (self) {
+export default async function (self) {
 	self.setFeedbackDefinitions({
 		resumePlay: {
 			name: 'Resume Play',

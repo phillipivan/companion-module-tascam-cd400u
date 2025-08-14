@@ -1,8 +1,8 @@
-const { Regex } = require('@companion-module/base')
-const { SOM, cmd } = require('./consts.js')
+import { Regex } from '@companion-module/base'
+import { SOM, cmd } from './consts.js'
 const padding = '0000'
 
-module.exports = function (self) {
+export default function (self) {
 	self.setActionDefinitions({
 		stop: {
 			name: 'Stop',

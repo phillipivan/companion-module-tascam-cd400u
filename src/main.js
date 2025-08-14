@@ -1,14 +1,14 @@
-const { InstanceBase, runEntrypoint, InstanceStatus } = require('@companion-module/base')
-const UpgradeScripts = require('./upgrades.js')
-const UpdateActions = require('./actions.js')
-const UpdateFeedbacks = require('./feedbacks.js')
-const UpdateVariableDefinitions = require('./variables.js')
-const UpdatePresetsDefinitions = require('./presets')
-const config = require('./config.js')
-const choices = require('./choices.js')
-const tcp = require('./tcp.js')
-const processCmd = require('./processcmd.js')
-const { EndSession } = require('./consts.js')
+import { InstanceBase, runEntrypoint, InstanceStatus } from '@companion-module/base'
+import UpgradeScripts from './upgrades.js'
+import UpdateActions from './actions.js'
+import UpdateFeedbacks from './feedbacks.js'
+import UpdateVariableDefinitions from './variables.js'
+import UpdatePresetsDefinitions from './presets'
+import config from './config.js'
+import choices from './choices.js'
+import * as tcp from './tcp.js'
+import * as processCmd from './processcmd.js'
+import { EndSession } from './consts.js'
 
 class TASCAM_CD_400U extends InstanceBase {
 	constructor(internal) {

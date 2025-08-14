@@ -1,6 +1,6 @@
 //const {} = require('./consts.js')
 
-module.exports = {
+export default {
 	search_mode: [
 		{ id: '00', label: 'Forward - Normal. AM/FM Search higher frequency' },
 		{ id: '01', label: 'Reverse - Normal. AM/FM Search lower frequency' },

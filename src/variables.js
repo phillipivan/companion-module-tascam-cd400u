@@ -1,4 +1,4 @@
-module.exports = async function (self) {
+export default async function (self) {
 	let varList = [
 		/* 		{ variableId: 'radioFreq', name: 'Radio Frequency' },
 		{ variableId: 'trackNo', name: 'Track Number' },

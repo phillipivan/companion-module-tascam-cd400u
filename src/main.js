@@ -3,9 +3,8 @@ import UpgradeScripts from './upgrades.js'
 import UpdateActions from './actions.js'
 import UpdateFeedbacks from './feedbacks.js'
 import UpdateVariableDefinitions from './variables.js'
-import UpdatePresetsDefinitions from './presets'
-import config from './config.js'
-import choices from './choices.js'
+import UpdatePresetsDefinitions from './presets.js'
+import * as config from './config.js'
 import * as tcp from './tcp.js'
 import * as processCmd from './processcmd.js'
 import { EndSession } from './consts.js'
@@ -13,7 +12,7 @@ import { EndSession } from './consts.js'
 class TASCAM_CD_400U extends InstanceBase {
 	constructor(internal) {
 		super(internal)
-		Object.assign(this, { ...config, ...tcp, ...processCmd, ...choices })
+		Object.assign(this, { ...config, ...tcp, ...processCmd })
 		this.cmdQueue = []
 	}
 	async init(config) {

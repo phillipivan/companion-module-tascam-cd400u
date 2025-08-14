@@ -2,6 +2,7 @@
 	"name": "tascam-cd400u",
 	"version": "1.1.6",
 	"main": "src/main.js",
+	"type": "module",
 	"scripts": {
 		"format": "prettier -w .",
 		"package": "companion-module-build",
@@ -14,16 +15,16 @@
 		"url": "git+https://github.com/bitfocus/companion-module-tascam-cd400u.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.11.3"
+		"@companion-module/base": "~1.12.1"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.1.1",
-		"eslint": "^9.21.0",
-		"prettier": "^3.5.3"
+		"@companion-module/tools": "^2.3.0",
+		"eslint": "^9.33.0",
+		"prettier": "^3.6.2"
 	},
 	"engines": {
 		"node": "^22.13"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
-	"packageManager": "yarn@4.7.0"
+	"packageManager": "yarn@4.9.2"
 }

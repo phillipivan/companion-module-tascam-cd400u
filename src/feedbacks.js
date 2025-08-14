@@ -18,7 +18,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Status',
 					choices: choices.resumePlay_feedback,
-					default: '00',
+					default: choices.resumePlay_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -42,7 +42,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Status',
 					choices: choices.repeat_feedback,
-					default: '00',
+					default: choices.repeat_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -66,7 +66,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Status',
 					choices: choices.incrPlay_feedback,
-					default: '00',
+					default: choices.incrPlay_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -90,7 +90,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Status',
 					choices: choices.remoteLocal_feedback,
-					default: '00',
+					default: choices.remoteLocal_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -114,7 +114,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Mode',
 					choices: choices.play_feedback,
-					default: '00',
+					default: choices.play_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -138,7 +138,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Status',
 					choices: choices.mechaStatus_feedback,
-					default: '00',
+					default: choices.mechaStatus_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -176,7 +176,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Error',
 					choices: choices.errorSense_feedback,
-					default: '0-00',
+					default: choices.errorSense_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -200,7 +200,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Caution',
 					choices: choices.cautionSense_feedback,
-					default: '0-00',
+					default: choices.cautionSense_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -224,7 +224,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Device',
 					choices: choices.deviceSelect_feedback,
-					default: '00',
+					default: choices.deviceSelect_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -248,7 +248,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Play Area',
 					choices: choices.playArea_feedback,
-					default: '00',
+					default: choices.playArea_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -272,7 +272,7 @@ export default async function (self) {
 					type: 'dropdown',
 					label: 'Status',
 					choices: choices.mediaStatus_feedback,
-					default: '00',
+					default: choices.mediaStatus_feedback[0].id,
 				},
 			],
 			callback: ({ options }) => {

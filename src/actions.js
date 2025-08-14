@@ -40,7 +40,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Mode',
 					choices: choices.search_mode,
-					default: '00',
+					default: choices.search_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -64,7 +64,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Mode',
 					choices: choices.skip_mode,
-					default: '00',
+					default: choices.skip_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -109,7 +109,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Resume Play Mode',
 					choices: choices.resumePlay_mode,
-					default: '00',
+					default: choices.resumePlay_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -136,7 +136,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Repeat Mode',
 					choices: choices.repeat_mode,
-					default: '00',
+					default: choices.repeat_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -163,7 +163,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Mode',
 					choices: choices.incrPlay_mode,
-					default: '00',
+					default: choices.incrPlay_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -200,7 +200,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Control Mode',
 					choices: choices.remoteLocal_mode,
-					default: '00',
+					default: choices.remoteLocal_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -227,7 +227,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Play Mode',
 					choices: choices.play_mode,
-					default: '00',
+					default: choices.play_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -254,8 +254,8 @@ export default function (self) {
 					type: 'dropdown',
 					id: 'mode',
 					label: 'Time Mode',
-					choices: self.currentTrackTime_sense,
-					default: '00',
+					choices: choices.currentTrackTime_sense,
+					default: choices.currentTrackTime_sense[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -276,7 +276,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Device',
 					choices: choices.deviceSelect_mode,
-					default: '10',
+					default: choices.deviceSelect_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -305,7 +305,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Device',
 					choices: choices.playArea_mode,
-					default: '00',
+					default: choices.playArea_mode[0].id,
 					tooltip: 'This command is not supported when the media is CD-DA.',
 				},
 			],
@@ -333,7 +333,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Enter',
 					choices: choices.enter_mode,
-					default: '01',
+					default: choices.enter_mode[0].id,
 				},
 			],
 			callback: ({ options }) => {
@@ -350,7 +350,7 @@ export default function (self) {
 					id: 'mode',
 					label: 'Back',
 					choices: choices.back_mode,
-					default: '01',
+					default: choices.back_mode[1].id,
 				},
 			],
 			callback: ({ options }) => {
